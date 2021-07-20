@@ -1,4 +1,3 @@
-# GiveBlood
-OSS 대회 출품작
+# OSS 대회 출품작
 
-[APK 다운로드](-login.apk)
+**수혈자들을 위한 헌혈자 알림 서비스**
