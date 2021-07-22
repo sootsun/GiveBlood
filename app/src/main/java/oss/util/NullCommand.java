@@ -1,4 +1,4 @@
-package oss.main;
+package oss.util;
 
 public class NullCommand implements Command {
     @Override

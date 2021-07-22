@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import oss.util.ActivityLauncher;
+import oss.util.NullCommand;
+
 /**
  *
  * @author PMS
@@ -16,7 +19,7 @@ import android.widget.Button;
  * 메인 액티비티
  * 로그인 버튼 구현
  *
- * @see oss.main.ActivityLauncher
+ * @see ActivityLauncher
  * */
 public class MainActivity extends AppCompatActivity {
     public static final String PASSED = "PASSED";

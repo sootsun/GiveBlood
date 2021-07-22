@@ -1,4 +1,4 @@
-package oss.main;
+package oss.util;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,7 +27,7 @@ public class ActivityLauncher extends AppCompatActivity {
      * @param command
      * 복귀시 할 행동
      * */
-    ActivityLauncher(Command command) {
+    public ActivityLauncher(Command command) {
         this.command = command;
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
