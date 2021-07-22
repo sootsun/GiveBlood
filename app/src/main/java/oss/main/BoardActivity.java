@@ -15,6 +15,8 @@ public class BoardActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("ID");
-        Toast.makeText(this, name+" 환영합니다", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, name+"님 환영합니다", Toast.LENGTH_LONG).show();
     }
+
+
 }

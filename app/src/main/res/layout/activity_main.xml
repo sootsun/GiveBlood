@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
     <TextView
         android:id="@+id/main_title_text"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_title_text" />
 
-    <com.google.android.gms.common.SignInButton
+    <Button
         android:id="@+id/main_google_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -45,13 +45,13 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
-        android:text="@string/action_sign_in_email"
-        app:backgroundTint="@color/teal_700"
+        android:text="@string/action_sign_in_google"
+        app:backgroundTint="#3579AF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_kakao_button">
 
-    </com.google.android.gms.common.SignInButton>
+    </Button>
 
     <Button
         android:id="@+id/main_pass_button"

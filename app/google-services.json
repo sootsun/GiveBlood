@@ -1,42 +1,41 @@
 {
   "project_info": {
-    "project_number": "920211078062",
-    "firebase_url": "https://bloodconnecting-733fc-default-rtdb.firebaseio.com",
-    "project_id": "bloodconnecting-733fc",
-    "storage_bucket": "bloodconnecting-733fc.appspot.com"
+    "project_number": "455956365532",
+    "project_id": "giveblood-406e0",
+    "storage_bucket": "giveblood-406e0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:920211078062:android:2046e8d082ba643d2ba63f",
+        "mobilesdk_app_id": "1:455956365532:android:2f7914cd5c7cb55e6cf419",
         "android_client_info": {
           "package_name": "oss.main"
         }
       },
       "oauth_client": [
         {
-          "client_id": "920211078062-a3l2afclvonv6pmp8uvorqdlfga7pi5u.apps.googleusercontent.com",
+          "client_id": "455956365532-d40iolsg64ueptf9gmnbe2qgl4o2shgg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "oss.main",
-            "certificate_hash": "28da1438fb83c1cb876306c00264e7511473e79f"
+            "certificate_hash": "48c3f6504ed696d14aef7a8d7a9b050fa189fe8d"
           }
         },
         {
-          "client_id": "920211078062-f4ptnsekccg81vlo0qq9n0jikjnim191.apps.googleusercontent.com",
+          "client_id": "455956365532-p8vrs23t6g24rh8f1s8kp9tgc8vdc0d6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCAYkPNdUXBSeAVP3p48P_-PvIVgRStse8"
+          "current_key": "AIzaSyA5eVimAP4YhJKQ71bpq5FB2IbcWixZqSI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "920211078062-f4ptnsekccg81vlo0qq9n0jikjnim191.apps.googleusercontent.com",
+              "client_id": "455956365532-p8vrs23t6g24rh8f1s8kp9tgc8vdc0d6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
