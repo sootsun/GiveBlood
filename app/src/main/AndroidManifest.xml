@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/SplashTheme">
 
-        <activity android:name="oss.ui.main.BoardActivity" />
-        <activity android:name="oss.ui.main.EmailLoginActivity" />
-        <activity android:name="oss.ui.main.KakaoLoginActivity" />
-        <activity android:name="oss.ui.main.MainActivity">
+        <activity android:name=".BoardActivity" />
+        <activity android:name=".EmailLoginActivity" />
+        <activity android:name=".KakaoLoginActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
