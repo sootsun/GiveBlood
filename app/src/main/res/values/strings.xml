@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NeedBlood</string>
+    <string name="app_name">블러드 커넥트</string>
     <string name="app_description">지정헌혈 서비스</string>
     <string name="action_intro">헌혈할래를 소개합니다.></string>
 
