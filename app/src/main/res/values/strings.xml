@@ -11,4 +11,7 @@
     <string name="action_sign_in_short">SIGN IN</string>
     <string name="prompt_email">EMAIL</string>
     <string name="prompt_password">PW</string>
+
+    <string name="action_id_inquiry">아이디 찾기</string>
+    <string name="action_pw_inquiry">비밀번호 찾기</string>
 </resources>
