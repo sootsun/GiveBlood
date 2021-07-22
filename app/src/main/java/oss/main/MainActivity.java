@@ -1,12 +1,15 @@
 package oss.main;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-import oss.util.ActivityLauncher;
+import oss.util.Command;
 import oss.util.NullCommand;
 
 /**
@@ -19,7 +22,7 @@ import oss.util.NullCommand;
  * 메인 액티비티
  * 로그인 버튼 구현
  *
- * @see ActivityLauncher
+ * @see Command
  * */
 public class MainActivity extends AppCompatActivity {
     public static final String PASSED = "PASSED";
@@ -35,22 +38,16 @@ public class MainActivity extends AppCompatActivity {
         Button passLogin = findViewById(R.id.main_pass_button);
 
         kakaoLogin.setOnClickListener(v -> {
-            ActivityLauncher kakaoLauncher = new ActivityLauncher(new NullCommand());
-            Intent intent = new Intent(getApplicationContext(), KakaoLoginActivity.class);
-            kakaoLauncher.launch(intent);
+            startActivity(new Intent(this, KakaoLoginActivity.class));
         });
 
         emailLogin.setOnClickListener(v -> {
-            ActivityLauncher emailLauncher = new ActivityLauncher(new NullCommand());
-            Intent intent = new Intent(getApplicationContext(), EmailLoginActivity.class);
-            emailLauncher.launch(intent);
+            startActivity(new Intent(this, EmailLoginActivity.class));
         });
 
         passLogin.setOnClickListener(v -> {
-            ActivityLauncher passLauncher = new ActivityLauncher(new NullCommand());
-            Intent intent = new Intent(getApplicationContext(), BoardActivity.class);
-            intent.putExtra("ID", PASSED);
-            passLauncher.launch(intent);
+            startActivity(new Intent(this, BoardActivity.class));
         });
     }
+
 }

@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import oss.util.ActivityLauncher;
-
 /**
  *
  * @author PMS
@@ -16,7 +14,7 @@ import oss.util.ActivityLauncher;
  *  보드 액티비티
  * 게시판 구현 화면
  *
- * @see ActivityLauncher
+ * @see oss.util.ActivityLauncher
  * */
 public class BoardActivity extends AppCompatActivity {
 

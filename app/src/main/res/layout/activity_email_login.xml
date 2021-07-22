@@ -5,15 +5,17 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".EmailLoginActivity">
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/email_id_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="260dp"
         android:layout_marginEnd="24dp"
+        android:background="@drawable/border"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="false"
@@ -22,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/email_pw_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -35,10 +37,10 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/email_id_edit" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/email_login_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -52,10 +54,10 @@
         app:backgroundTint="#F36464"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/email_pw_edit" />
 
     <Button
-        android:id="@+id/addMember"
+        android:id="@+id/email_register_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -65,7 +67,7 @@
         app:backgroundTint="#00FF0000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login"
+        app:layout_constraintTop_toBottomOf="@+id/email_login_button"
         style="?android:attr/borderlessButtonStyle" />
 
     <Button
@@ -79,7 +81,7 @@
         app:backgroundTint="#00ff0000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login"
+        app:layout_constraintTop_toBottomOf="@+id/email_login_button"
         app:layout_constraintVertical_bias="0.501"
         style="?android:attr/borderlessButtonStyle" />
 
@@ -91,9 +93,9 @@
         android:textColor="#000000"
         app:backgroundTint="#00FF0000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/addMember"
+        app:layout_constraintEnd_toStartOf="@+id/email_register_button"
         app:layout_constraintStart_toEndOf="@+id/IDinquiry"
-        app:layout_constraintTop_toBottomOf="@+id/login"
+        app:layout_constraintTop_toBottomOf="@+id/email_login_button"
         style="?android:attr/borderlessButtonStyle"/>
 
     <TextView
