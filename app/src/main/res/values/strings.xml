@@ -1,17 +1,13 @@
 <resources>
-    <string name="app_name">NeedBlood</string>
-    <string name="app_description">지정헌혈 서비스</string>
-    <string name="action_intro">헌혈할래를 소개합니다.></string>
-
+    <string name="app_name">블러드 커넥트</string>
     <string name="action_sign_in_kakao">카카오로 시작하기</string>
     <string name="action_sign_in_email">이메일로 시작하기</string>
-    <string name="action_register">회원가입</string>
     <string name="action_pass">비회원으로 시작하기</string>
 
-    <string name="action_sign_in_short">로그인</string>
     <string name="prompt_email">이메일</string>
     <string name="prompt_password">비밀번호</string>
-
+    <string name="action_sign_in_short">로그인</string>
     <string name="action_id_inquiry">아이디 찾기</string>
     <string name="action_pw_inquiry">비밀번호 찾기</string>
+    <string name="action_register">회원가입</string>
 </resources>
