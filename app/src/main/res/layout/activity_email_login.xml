@@ -15,10 +15,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="260dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/border"
+        android:background="@android:drawable/edit_text"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
-        android:selectAllOnFocus="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +29,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:background="@android:drawable/edit_text"
         android:hint="@string/prompt_password"
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionDone"
@@ -71,40 +71,42 @@
         style="?android:attr/borderlessButtonStyle" />
 
     <Button
-        android:id="@+id/IDinquiry"
+        android:id="@+id/email_findid_button"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:text="@string/action_id_inquiry"
-        android:textColor="#000000"
-        app:backgroundTint="#00ff0000"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/transparency"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_login_button"
-        app:layout_constraintVertical_bias="0.501"
-        style="?android:attr/borderlessButtonStyle" />
+        app:layout_constraintVertical_bias="0.501" />
 
     <Button
-        android:id="@+id/PWinquiry"
+        android:id="@+id/email_findpw_button"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/action_pw_inquiry"
-        android:textColor="#000000"
-        app:backgroundTint="#00FF0000"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/transparency"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/email_register_button"
-        app:layout_constraintStart_toEndOf="@+id/IDinquiry"
-        app:layout_constraintTop_toBottomOf="@+id/email_login_button"
-        style="?android:attr/borderlessButtonStyle"/>
+        app:layout_constraintStart_toEndOf="@+id/email_findid_button"
+        app:layout_constraintTop_toBottomOf="@+id/email_login_button" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="로고넣기"
+    <ImageView
+        android:id="@+id/email_logo_image"
+        android:layout_width="216dp"
+        android:layout_height="93dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_final" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
