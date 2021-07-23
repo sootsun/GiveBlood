@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 public class BoardActivity extends AppCompatActivity {
@@ -18,5 +19,7 @@ public class BoardActivity extends AppCompatActivity {
         Toast.makeText(this, name+"님 환영합니다", Toast.LENGTH_LONG).show();
     }
 
-
+    public void fragmentOnClick(View v) {
+        return;
+    }
 }
