@@ -21,7 +21,6 @@ class LoginActivity : AppCompatActivity() {
     private var auth: FirebaseAuth = Firebase.auth
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_NeedBlood)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
