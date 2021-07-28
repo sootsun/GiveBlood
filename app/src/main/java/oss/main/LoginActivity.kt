@@ -30,8 +30,8 @@ class LoginActivity : AppCompatActivity() {
             result?.let {
                 firebaseAuthWithGoogle(it)  //tokenId를 이용해 firebase에 인증하는 함수 호출.
             }
-        }
 
+        }
         // 구글  로그인 버튼
         findViewById<Button>(R.id.main_google_button).setOnClickListener {
             //Launcher를 실행해 LoginActivity -> 구글 로그인 화면으로 이동.
@@ -74,9 +74,11 @@ class LoginActivity : AppCompatActivity() {
                         // Sign in success, update UI with the signed-in user's information
                         val user = auth.currentUser
                         val name = user?.displayName
+                        val info = user?.email
 
                         var intent = Intent(this, BoardActivity::class.java)
                         intent.putExtra("ID", name)
+                        intent.putExtra("INFO", info);
                         startActivity(intent)
                     } else {
                         // If sign in fails, display a message to the user.
