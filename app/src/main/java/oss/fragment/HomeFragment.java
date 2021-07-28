@@ -1,14 +1,18 @@
 package oss.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +29,7 @@ import oss.data.FireBaseSingleTon;
 import oss.data.ItemRecyclerAdapter;
 import oss.data.Refs;
 import oss.main.R;
+import oss.main.WriteActivity;
 
 /**
  * @// TODO: 2021-07-27 글쓰기 버튼 구현
@@ -35,6 +40,32 @@ public class HomeFragment extends Fragment {
     public RecyclerView recyclerView;
     public ItemRecyclerAdapter itemRecyclerAdapter;
     private FloatingActionButton addButton;
+
+    private DatabaseReference myRef;
+    private ActivityResultLauncher<Intent> launcher;
+
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        myRef = FireBaseSingleTon.getMyFireBase().getMyRef();
+
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    Log.d("LU", "start");
+                    if(result.getResultCode() == Activity.RESULT_OK) {
+                        Log.d("LU", "do");
+                        Intent data = result.getData();
+
+                        //Log.d("LU", name);
+
+                        BoardItem boardItem = data.getParcelableExtra(Refs.DATA.toString());
+                        myRef.child(Refs.USER.toString()).push().setValue(boardItem);
+                        itemRecyclerAdapter.notifyDataSetChanged();
+                    }
+                    Log.d("LU", "finish");
+                });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,15 +82,14 @@ public class HomeFragment extends Fragment {
 
         /*게시판 글쓰기 버튼*/
         addButton.setOnClickListener(v -> {
-            DatabaseReference myRef = FireBaseSingleTon.getMyFireBase().getMyRef();
 
-            Intent intent = getActivity().getIntent();
-            String name = intent.getStringExtra(Refs.ID.toString());
-            String info = intent.getStringExtra(Refs.INFO.toString());
+            /*USER 데이터*/
+            //Intent auth = getActivity().getIntent();
+            //String name = auth.getStringExtra(Refs.ID.toString());
+            //String info = auth.getStringExtra(Refs.INFO.toString());
 
-            BoardItem boardItem = new BoardItem(name, info);
-            myRef.child(Refs.USER.toString()).push().setValue(boardItem);
-            itemRecyclerAdapter.notifyDataSetChanged();
+            Intent intent = new Intent(getContext(), WriteActivity.class);
+            launcher.launch(intent);
         });
 
         return rootView;
