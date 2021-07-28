@@ -1,5 +1,6 @@
 package oss.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -14,22 +15,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.ArrayList;
 
 import oss.data.BoardItem;
+import oss.data.FireBaseSingleTon;
 import oss.data.ItemRecyclerAdapter;
+import oss.data.Refs;
 import oss.main.R;
 
 /**
  * @// TODO: 2021-07-27 글쓰기 버튼 구현
  */
+@IgnoreExtraProperties
 public class HomeFragment extends Fragment {
 
     public RecyclerView recyclerView;
     public ItemRecyclerAdapter itemRecyclerAdapter;
     private FloatingActionButton addButton;
-    private ArrayList<BoardItem> boardItemArrayList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,17 +45,22 @@ public class HomeFragment extends Fragment {
         itemRecyclerAdapter = new ItemRecyclerAdapter();
         addButton = rootView.findViewById(R.id.home_add_button);
 
-        itemRecyclerAdapter.setItemList(boardItemArrayList);
+        itemRecyclerAdapter.setItemList(FireBaseSingleTon.getItemArrayList());
         recyclerView.setAdapter(itemRecyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
         /*게시판 글쓰기 버튼*/
         addButton.setOnClickListener(v -> {
-            boardItemArrayList.add(new BoardItem("Me", "What it is"));
-            itemRecyclerAdapter.setItemList(boardItemArrayList);
-        });
+            DatabaseReference myRef = FireBaseSingleTon.getMyFireBase().getMyRef();
 
+            Intent intent = getActivity().getIntent();
+            String name = intent.getStringExtra(Refs.ID.toString());
+            String info = intent.getStringExtra(Refs.INFO.toString());
+
+            BoardItem boardItem = new BoardItem(name, info);
+            myRef.child(Refs.USER.toString()).push().setValue(boardItem);
+            itemRecyclerAdapter.notifyDataSetChanged();
+        });
 
         return rootView;
     }

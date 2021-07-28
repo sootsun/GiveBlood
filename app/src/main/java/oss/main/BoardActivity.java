@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import oss.data.Refs;
 import oss.fragment.ChatFragment;
 import oss.fragment.HomeFragment;
 import oss.fragment.NearFagment;
@@ -35,7 +36,7 @@ public class BoardActivity extends AppCompatActivity {
 
         //계정정보
         Intent intent = getIntent();
-        String name = intent.getStringExtra("ID");
+        String name = intent.getStringExtra(Refs.ID.toString());
         Toast.makeText(this, name+"님 환영합니다", Toast.LENGTH_LONG).show();
 
 
