@@ -3,8 +3,10 @@ package oss.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.animation.AccelerateInterpolator;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
  *
  * */
 public class ActivityLauncher extends AppCompatActivity {
+
+    //민석이의 코드
     private Command command;
     private ActivityResultLauncher launcher;
 
@@ -46,4 +50,14 @@ public class ActivityLauncher extends AppCompatActivity {
     public void launch(Intent intent) {
         launcher.launch(intent);
     }
+
+    // GetContent creates an ActivityResultLauncher<String> to allow you to pass
+// in the mime type you'd like to allow the user to select
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            new ActivityResultCallback<Uri>() {
+                @Override
+                public void onActivityResult(Uri uri) {
+                    // Handle the returned Uri
+                }
+            });
 }
