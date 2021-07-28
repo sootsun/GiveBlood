@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="oss.main">
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SplashTheme">
-        <activity android:name=".WriteActivity"></activity>
+        <meta-data
+            android:name = "com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}"/>
+        <activity android:name=".WritingActivity"></activity>
         <activity android:name=".BoardActivity" />
         <activity android:name=".EmailLoginActivity" />
         <activity android:name=".KakaoLoginActivity" />
