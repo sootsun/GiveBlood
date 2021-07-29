@@ -49,6 +49,9 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         myRef = FireBaseSingleTon.getMyFireBase().getMyRef();
+        itemRecyclerAdapter = new ItemRecyclerAdapter();
+        itemRecyclerAdapter.setItemList(FireBaseSingleTon.getItemArrayList());
+        itemRecyclerAdapter.notifyDataSetChanged();
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -60,7 +63,7 @@ public class HomeFragment extends Fragment {
                         //Log.d("LU", name);
 
                         BoardItem boardItem = data.getParcelableExtra(Refs.DATA.toString());
-                        myRef.child(Refs.USER.toString()).push().setValue(boardItem);
+                        myRef.child(Refs.DATA.toString()).push().setValue(boardItem);
                         itemRecyclerAdapter.notifyDataSetChanged();
                     }
                     Log.d("LU", "finish");
@@ -73,10 +76,8 @@ public class HomeFragment extends Fragment {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = rootView.findViewById(R.id.home_recycler);
-        itemRecyclerAdapter = new ItemRecyclerAdapter();
         addButton = rootView.findViewById(R.id.home_add_button);
 
-        itemRecyclerAdapter.setItemList(FireBaseSingleTon.getItemArrayList());
         recyclerView.setAdapter(itemRecyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
