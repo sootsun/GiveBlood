@@ -38,7 +38,7 @@ public class BoardActivity extends AppCompatActivity {
         //계정정보
         Intent intent = getIntent();
         UserData user = intent.getParcelableExtra(REF.USER.name());
-        Toast.makeText(this, user.userName+"님 환영합니다", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, user.userName+"님 환영합니다", Toast.LENGTH_SHORT).show();
 
 
         /*프래그먼트*/

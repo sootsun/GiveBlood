@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,6 +59,14 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
             profile = (TextView) itemView.findViewById(R.id.item_profile);
             info = (TextView) itemView.findViewById(R.id.item_info);
             writer = (TextView) itemView.findViewById(R.id.item_writer);
+
+            itemView.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                if(pos != RecyclerView.NO_POSITION) {
+                    BoardItem item = itemList.get(pos);
+                    Toast.makeText(v.getContext(), item.boardName + " 글 클릭됨", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         void onBind(BoardItem item){
