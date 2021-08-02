@@ -12,7 +12,7 @@ import oss.data.REF;
 import oss.data.UserData;
 import oss.fragment.ChatFragment;
 import oss.fragment.HomeFragment;
-import oss.fragment.NearFagment;
+import oss.fragment.NearFragment;
 
 /**
  * 게시판 액티비티
@@ -22,7 +22,7 @@ import oss.fragment.NearFagment;
  * */
 public class BoardActivity extends AppCompatActivity {
     HomeFragment homeFragment;
-    NearFagment nearFagment;
+    NearFragment nearFragment;
     ChatFragment chatFragment;
 
     @Override
@@ -43,7 +43,7 @@ public class BoardActivity extends AppCompatActivity {
 
         /*프래그먼트*/
         homeFragment = new HomeFragment();
-        //nearFagment = new NearFagment();
+        //nearFragment = new NearFragment();
         chatFragment = new ChatFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
@@ -57,7 +57,7 @@ public class BoardActivity extends AppCompatActivity {
                     return true;
                 case R.id.nearMap:
                     Toast.makeText(getApplicationContext(), "Near", Toast.LENGTH_LONG).show();
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.container, nearFagment).commit();
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.container, nearFragment).commit();
                     return true;
                 case R.id.chatting:
                     //Toast.makeText(getApplicationContext(), "Chat", Toast.LENGTH_LONG).show();

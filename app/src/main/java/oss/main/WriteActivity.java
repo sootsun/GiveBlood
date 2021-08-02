@@ -17,11 +17,11 @@ public class WriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
 
-        EditText id = findViewById(R.id.editTextTextPersonName);
-        EditText info = findViewById(R.id.editTextTextPersonName2);
+        EditText id = findViewById(R.id.write_name_text);
+        EditText info = findViewById(R.id.write_detail_text);
 
 
-        findViewById(R.id.button).setOnClickListener(v -> {
+        findViewById(R.id.write_confirm_button).setOnClickListener(v -> {
             UserData user = getIntent().getParcelableExtra(REF.USER.name());
 
             Intent intent = new Intent();

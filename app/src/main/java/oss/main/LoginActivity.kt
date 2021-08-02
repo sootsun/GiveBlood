@@ -32,7 +32,6 @@ class LoginActivity : AppCompatActivity() {
             result?.let {
                 firebaseAuthWithGoogle(it)  //tokenId를 이용해 firebase에 인증하는 함수 호출.
             }
-
         }
         // 구글  로그인 버튼
         findViewById<Button>(R.id.main_google_button).setOnClickListener {
