@@ -1,13 +1,21 @@
 package oss.main;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import oss.data.BoardItem;
 import oss.data.REF;
 import oss.data.UserData;
 import oss.fragment.ChatFragment;
@@ -25,6 +33,11 @@ public class BoardActivity extends AppCompatActivity {
     NearFragment nearFragment;
     ChatFragment chatFragment;
 
+    FloatingActionButton addButton;
+
+    private DatabaseReference myRef;
+    private ActivityResultLauncher<Intent> launcher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,16 +48,35 @@ public class BoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
-        //계정정보
-        Intent intent = getIntent();
-        UserData user = intent.getParcelableExtra(REF.USER.name());
-        Toast.makeText(this, user.userName+"님 환영합니다", Toast.LENGTH_SHORT).show();
+        myRef = FirebaseDatabase.getInstance().getReference(REF.LIST.name());
 
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        BoardItem boardItem = data.getParcelableExtra(REF.LIST.toString());
+                        myRef.push().setValue(boardItem);
+                    }
+                });
+
+        //계정정보
+        Intent userIntent = getIntent();
+        UserData user = userIntent.getParcelableExtra(REF.USER.name());
+        Toast.makeText(this, user.userName+"님 환영합니다", Toast.LENGTH_SHORT).show();
 
         /*프래그먼트*/
         homeFragment = new HomeFragment();
         //nearFragment = new NearFragment();
         chatFragment = new ChatFragment();
+
+        addButton = findViewById(R.id.home_add_button);
+
+        /*게시판 글쓰기 버튼*/
+        addButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, WriteActivity.class);
+            intent.putExtra(REF.USER.name(), user);
+            launcher.launch(intent);
+        });
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
 
@@ -52,6 +84,7 @@ public class BoardActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
+                    addButton.setVisibility(View.VISIBLE);
                     //Toast.makeText(getApplicationContext(), "HOME", Toast.LENGTH_LONG).show();
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                     return true;
@@ -60,6 +93,7 @@ public class BoardActivity extends AppCompatActivity {
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, nearFragment).commit();
                     return true;
                 case R.id.chatting:
+                    addButton.setVisibility(View.INVISIBLE);
                     //Toast.makeText(getApplicationContext(), "Chat", Toast.LENGTH_LONG).show();
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, chatFragment).commit();
                     return true;

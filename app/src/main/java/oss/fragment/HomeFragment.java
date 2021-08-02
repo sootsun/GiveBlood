@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,53 +43,39 @@ import oss.main.WriteActivity;
 @IgnoreExtraProperties
 public class HomeFragment extends Fragment {
 
-    public RecyclerView recyclerView;
-    private FloatingActionButton addButton;
+    private SwipeRefreshLayout refreshLayout;
+    private RecyclerView recyclerView;
 
     private DatabaseReference myRef;
-    private ActivityResultLauncher<Intent> launcher;
-    public BoardItemAdapter boardItemAdapter;
+    private BoardItemAdapter boardItemAdapter;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        myRef = FirebaseDatabase.getInstance().getReference();
+        myRef = FirebaseDatabase.getInstance().getReference(REF.LIST.name());
         boardItemAdapter = new BoardItemAdapter();
 
         myRef.addValueEventListener(new ValueEventListener() {
-
             //변경 되었을 시 할 행동
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 ArrayList<BoardItem> itemArrayList = new ArrayList<>();
 
                 //리스트 새로 업데이트
-                for(DataSnapshot dataSnapshot : snapshot.child(REF.DATA.name()).getChildren()) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     BoardItem item = dataSnapshot.getValue(BoardItem.class);
                     itemArrayList.add(item);
                 }
                 boardItemAdapter.setItemList(itemArrayList);
             }
-
-            //취소
+            //실패
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
                 Log.w("FireBase", "Failed to read value.", error.toException());
             }
         });
-
-        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if(result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-
-                        //Log.d("LU", name);
-
-                        BoardItem boardItem = data.getParcelableExtra(REF.DATA.toString());
-                        myRef.child(REF.DATA.toString()).push().setValue(boardItem);
-                    }
-                });
+        boardItemAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -96,23 +83,16 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_home, container, false);
 
+        refreshLayout = rootView.findViewById(R.id.home_refresh);
         recyclerView = rootView.findViewById(R.id.home_recycler);
-        addButton = rootView.findViewById(R.id.home_add_button);
+
+        refreshLayout.setOnRefreshListener(() -> {
+            boardItemAdapter.notifyDataSetChanged();
+            refreshLayout.setRefreshing(false);
+        });
 
         recyclerView.setAdapter(boardItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        /*게시판 글쓰기 버튼*/
-        addButton.setOnClickListener(v -> {
-
-            /*USER 데이터*/
-            Intent auth = getActivity().getIntent();
-            UserData userData = auth.getParcelableExtra(REF.USER.name());
-
-            Intent intent = new Intent(getContext(), WriteActivity.class);
-            intent.putExtra(REF.USER.name(), userData);
-            launcher.launch(intent);
-        });
 
         return rootView;
     }

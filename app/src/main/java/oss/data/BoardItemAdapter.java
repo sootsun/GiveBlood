@@ -40,7 +40,7 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
 
     public void setItemList(ArrayList<BoardItem> list){
         this.itemList = list;
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
 
     @Override
@@ -60,6 +60,7 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
             info = (TextView) itemView.findViewById(R.id.item_info);
             writer = (TextView) itemView.findViewById(R.id.item_writer);
 
+            //항목 클릭 이벤트
             itemView.setOnClickListener(v -> {
                 int pos = getAdapterPosition();
                 if(pos != RecyclerView.NO_POSITION) {

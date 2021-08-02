@@ -27,7 +27,7 @@ public class WriteActivity extends AppCompatActivity {
             Intent intent = new Intent();
             BoardItem boardItem = new BoardItem(id.getText().toString(), info.getText().toString(), user);
 
-            intent.putExtra(REF.DATA.name(), boardItem);
+            intent.putExtra(REF.LIST.name(), boardItem);
 
             setResult(RESULT_OK, intent);
             finish();
