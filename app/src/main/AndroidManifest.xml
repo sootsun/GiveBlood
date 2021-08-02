@@ -14,8 +14,6 @@
         android:theme="@style/SplashTheme">
         <activity android:name=".WriteActivity"></activity>
         <activity android:name=".BoardActivity" />
-        <activity android:name=".EmailLoginActivity" />
-        <activity android:name=".KakaoLoginActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

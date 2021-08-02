@@ -75,7 +75,6 @@ public class HomeFragment extends Fragment {
                 Log.w("FireBase", "Failed to read value.", error.toException());
             }
         });
-        boardItemAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -43,7 +43,7 @@ public class BoardActivity extends AppCompatActivity {
 
         //액션바 보이기
         setTheme(R.style.Theme_NeedBlood);
-        getSupportActionBar().setTitle("게시판");
+        getSupportActionBar().setTitle(R.string.board);
         
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
@@ -62,7 +62,7 @@ public class BoardActivity extends AppCompatActivity {
         //계정정보
         Intent userIntent = getIntent();
         UserData user = userIntent.getParcelableExtra(REF.USER.name());
-        Toast.makeText(this, user.userName+"님 환영합니다", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, user.userName+getString(R.string.signin_complete), Toast.LENGTH_SHORT).show();
 
         /*프래그먼트*/
         homeFragment = new HomeFragment();
@@ -85,7 +85,6 @@ public class BoardActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.home:
                     addButton.setVisibility(View.VISIBLE);
-                    //Toast.makeText(getApplicationContext(), "HOME", Toast.LENGTH_LONG).show();
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                     return true;
                 case R.id.nearMap:
@@ -94,7 +93,6 @@ public class BoardActivity extends AppCompatActivity {
                     return true;
                 case R.id.chatting:
                     addButton.setVisibility(View.INVISIBLE);
-                    //Toast.makeText(getApplicationContext(), "Chat", Toast.LENGTH_LONG).show();
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, chatFragment).commit();
                     return true;
                 case R.id.setting:

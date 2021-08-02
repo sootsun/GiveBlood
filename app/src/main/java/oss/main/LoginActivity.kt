@@ -82,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                     } else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(this@LoginActivity, "Failed", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity, R.string.signin_fail, Toast.LENGTH_LONG).show()
                     }
                 }
     }

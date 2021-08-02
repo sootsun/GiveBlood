@@ -40,7 +40,7 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
 
     public void setItemList(ArrayList<BoardItem> list){
         this.itemList = list;
-        //notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     @Override

@@ -8,8 +8,7 @@ import android.os.Parcelable;
  * @see Parcelable
  * [Parcelable] Intent로 보내기 위한 인터페이스
  *
- * @now name, info
- * @// TODO: 2021-07-29  글쓴이, 의료기관명, 병실, 환자명, 혈액형, 필요한 혈액 종류, 환자번호 ...
+ * @ TODO: 2021-07-29  글쓴이, 의료기관명, 병실, 환자명, 혈액형, 필요한 혈액 종류, 환자번호 ...
  *
  * */
 public class BoardItem implements Parcelable {
