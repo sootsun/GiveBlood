@@ -20,26 +20,26 @@ import oss.main.R;
  * @see BoardItem
  *
  * */
-public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapter.ViewHolder> {
+public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.ViewHolder> {
 
-    private ArrayList<BoardItem> itemList;
+    private ArrayList<BoardItem> itemList = new ArrayList<>();
 
     @NonNull
     @NotNull
     @Override
-    public ItemRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public BoardItemAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recyclerview, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BoardItemAdapter.ViewHolder holder, int position) {
         holder.onBind(itemList.get(position));
     }
 
     public void setItemList(ArrayList<BoardItem> list){
         this.itemList = list;
-        //notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -50,17 +50,20 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView info;
         TextView profile;
+        TextView writer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             profile = (TextView) itemView.findViewById(R.id.item_profile);
             info = (TextView) itemView.findViewById(R.id.item_info);
+            writer = (TextView) itemView.findViewById(R.id.item_writer);
         }
 
         void onBind(BoardItem item){
-            profile.setText(item.name);
-            info.setText(item.info);
+            profile.setText(item.boardName);
+            info.setText(item.boardInfo);
+            writer.setText(item.userName);
         }
     }
 }

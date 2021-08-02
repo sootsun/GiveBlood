@@ -1,5 +1,5 @@
 package oss.data;
 
-public enum Refs {
+public enum REF {
     ID, DATA, USER
 }

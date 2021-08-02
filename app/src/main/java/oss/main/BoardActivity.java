@@ -8,7 +8,8 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import oss.data.Refs;
+import oss.data.REF;
+import oss.data.UserData;
 import oss.fragment.ChatFragment;
 import oss.fragment.HomeFragment;
 import oss.fragment.NearFagment;
@@ -36,13 +37,13 @@ public class BoardActivity extends AppCompatActivity {
 
         //계정정보
         Intent intent = getIntent();
-        String name = intent.getStringExtra(Refs.ID.toString());
-        Toast.makeText(this, name+"님 환영합니다", Toast.LENGTH_LONG).show();
+        UserData user = intent.getParcelableExtra(REF.USER.name());
+        Toast.makeText(this, user.userName+"님 환영합니다", Toast.LENGTH_LONG).show();
 
 
         /*프래그먼트*/
         homeFragment = new HomeFragment();
-        nearFagment = new NearFagment();
+        //nearFagment = new NearFagment();
         chatFragment = new ChatFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
@@ -55,8 +56,8 @@ public class BoardActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                     return true;
                 case R.id.nearMap:
-                    //Toast.makeText(getApplicationContext(), "Near", Toast.LENGTH_LONG).show();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, nearFagment).commit();
+                    Toast.makeText(getApplicationContext(), "Near", Toast.LENGTH_LONG).show();
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.container, nearFagment).commit();
                     return true;
                 case R.id.chatting:
                     //Toast.makeText(getApplicationContext(), "Chat", Toast.LENGTH_LONG).show();

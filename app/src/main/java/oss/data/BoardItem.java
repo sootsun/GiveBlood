@@ -3,7 +3,7 @@ package oss.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**게시판 세부 클래스
+/**게시판 내용
  *
  * @see Parcelable
  * [Parcelable] Intent로 보내기 위한 인터페이스
@@ -13,19 +13,23 @@ import android.os.Parcelable;
  *
  * */
 public class BoardItem implements Parcelable {
-    public String name;
-    public String info;
+    //public int id;
+    public String boardName;
+    public String boardInfo;
+    public String userName;
 
     public BoardItem(){}
 
-    public BoardItem(String name, String info) {
-        this.info = info;
-        this.name = name;
+    public BoardItem(String name, String info, UserData userData) {
+        this.boardInfo = info;
+        this.boardName = name;
+        this.userName = userData.userName;
     }
 
     protected BoardItem(Parcel in) {
-        name = in.readString();
-        info = in.readString();
+        boardName = in.readString();
+        boardInfo = in.readString();
+        userName = in.readString();
     }
 
     public static final Creator<BoardItem> CREATOR = new Creator<BoardItem>() {
@@ -47,7 +51,8 @@ public class BoardItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(info);
+        dest.writeString(boardName);
+        dest.writeString(boardInfo);
+        dest.writeString(userName);
     }
 }

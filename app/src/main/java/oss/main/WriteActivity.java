@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import oss.data.BoardItem;
-import oss.data.Refs;
+import oss.data.REF;
+import oss.data.UserData;
 
 public class WriteActivity extends AppCompatActivity {
 
@@ -21,10 +22,12 @@ public class WriteActivity extends AppCompatActivity {
 
 
         findViewById(R.id.button).setOnClickListener(v -> {
-            Intent intent = new Intent();
-            BoardItem boardItem = new BoardItem(id.getText().toString(), info.getText().toString());
+            UserData user = getIntent().getParcelableExtra(REF.USER.name());
 
-            intent.putExtra(Refs.DATA.toString(), boardItem);
+            Intent intent = new Intent();
+            BoardItem boardItem = new BoardItem(id.getText().toString(), info.getText().toString(), user);
+
+            intent.putExtra(REF.DATA.name(), boardItem);
 
             setResult(RESULT_OK, intent);
             finish();

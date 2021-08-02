@@ -12,6 +12,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import oss.data.REF
+import oss.data.UserData
 import oss.util.SignInIntentContract
 
 class LoginActivity : AppCompatActivity() {
@@ -52,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
                             Log.d(TAG, "signInAnonymously:success")
                             val user = auth.currentUser
                             var intent = Intent(this, BoardActivity::class.java)
-                            intent.putExtra("ID", PASSED)
+                            intent.putExtra(REF.USER.name, UserData(PASSED, PASSED))
                             startActivity(intent)
                         } else {
                             // If sign in fails, display a message to the user.
@@ -74,11 +76,10 @@ class LoginActivity : AppCompatActivity() {
                         // Sign in success, update UI with the signed-in user's information
                         val user = auth.currentUser
                         val name = user?.displayName
-                        val info = user?.email
+                        val mail = user?.email
 
                         var intent = Intent(this, BoardActivity::class.java)
-                        intent.putExtra("ID", name)
-                        intent.putExtra("INFO", info);
+                        intent.putExtra(REF.USER.name, UserData(name, mail))
                         startActivity(intent)
                     } else {
                         // If sign in fails, display a message to the user.

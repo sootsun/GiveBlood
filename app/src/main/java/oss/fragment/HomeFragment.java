@@ -6,9 +6,9 @@ import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,18 +16,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 import oss.data.BoardItem;
-import oss.data.FireBaseSingleTon;
-import oss.data.ItemRecyclerAdapter;
-import oss.data.Refs;
+import oss.data.BoardItemAdapter;
+import oss.data.REF;
+import oss.data.UserData;
 import oss.main.R;
 import oss.main.WriteActivity;
 
@@ -38,35 +43,51 @@ import oss.main.WriteActivity;
 public class HomeFragment extends Fragment {
 
     public RecyclerView recyclerView;
-    public ItemRecyclerAdapter itemRecyclerAdapter;
     private FloatingActionButton addButton;
 
     private DatabaseReference myRef;
     private ActivityResultLauncher<Intent> launcher;
+    public BoardItemAdapter boardItemAdapter;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        myRef = FireBaseSingleTon.getMyFireBase().getMyRef();
-        itemRecyclerAdapter = new ItemRecyclerAdapter();
-        itemRecyclerAdapter.setItemList(FireBaseSingleTon.getItemArrayList());
-        itemRecyclerAdapter.notifyDataSetChanged();
+        myRef = FirebaseDatabase.getInstance().getReference();
+        boardItemAdapter = new BoardItemAdapter();
+
+        myRef.addValueEventListener(new ValueEventListener() {
+
+            //변경 되었을 시 할 행동
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                ArrayList<BoardItem> itemArrayList = new ArrayList<>();
+
+                //리스트 새로 업데이트
+                for(DataSnapshot dataSnapshot : snapshot.child(REF.DATA.name()).getChildren()) {
+                    BoardItem item = dataSnapshot.getValue(BoardItem.class);
+                    itemArrayList.add(item);
+                }
+                boardItemAdapter.setItemList(itemArrayList);
+            }
+
+            //취소
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Log.w("FireBase", "Failed to read value.", error.toException());
+            }
+        });
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    Log.d("LU", "start");
                     if(result.getResultCode() == Activity.RESULT_OK) {
-                        Log.d("LU", "do");
                         Intent data = result.getData();
 
                         //Log.d("LU", name);
 
-                        BoardItem boardItem = data.getParcelableExtra(Refs.DATA.toString());
-                        myRef.child(Refs.DATA.toString()).push().setValue(boardItem);
-                        itemRecyclerAdapter.notifyDataSetChanged();
+                        BoardItem boardItem = data.getParcelableExtra(REF.DATA.toString());
+                        myRef.child(REF.DATA.toString()).push().setValue(boardItem);
                     }
-                    Log.d("LU", "finish");
                 });
     }
 
@@ -78,18 +99,18 @@ public class HomeFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.home_recycler);
         addButton = rootView.findViewById(R.id.home_add_button);
 
-        recyclerView.setAdapter(itemRecyclerAdapter);
+        recyclerView.setAdapter(boardItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         /*게시판 글쓰기 버튼*/
         addButton.setOnClickListener(v -> {
 
             /*USER 데이터*/
-            //Intent auth = getActivity().getIntent();
-            //String name = auth.getStringExtra(Refs.ID.toString());
-            //String info = auth.getStringExtra(Refs.INFO.toString());
+            Intent auth = getActivity().getIntent();
+            UserData userData = auth.getParcelableExtra(REF.USER.name());
 
             Intent intent = new Intent(getContext(), WriteActivity.class);
+            intent.putExtra(REF.USER.name(), userData);
             launcher.launch(intent);
         });
 
