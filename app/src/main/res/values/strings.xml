@@ -10,6 +10,7 @@
     <string name="map">지도</string>
 
     <string name="board">게시판</string>
+    <string name="map">지도</string>
     <string name="signin_complete">님 환영합니다</string>
     <string name="signin_fail">로그인 실패</string>
 

@@ -23,8 +23,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -33,7 +31,7 @@ import oss.main.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link NearFagment#newInstance} factory method to
+ * Use the {@link NearFragment#} factory method to
  * create an instance of this fragment.
  */
 public class NearFragment extends Fragment {
@@ -44,12 +42,14 @@ public class NearFragment extends Fragment {
     Double latitude = 0.0;
     Double longitude = 0.0;
 
+
     @Override
     public View onCreate()
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_near, null, false);
         int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
         int permissionCheck2 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION);
@@ -89,7 +89,6 @@ public class NearFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -118,7 +117,7 @@ public class NearFragment extends Fragment {
         float minDistance = 1;
 
         if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
-        ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
         ){
             Toast.makeText(getActivity(),"DONT HAVE PERMISSIONS",Toast.LENGTH_LONG).show();
             return;
