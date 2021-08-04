@@ -16,10 +16,8 @@
         <meta-data
             android:name = "com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}"/>
-        <activity android:name=".WritingActivity"></activity>
+        <activity android:name=".WriteActivity"></activity>
         <activity android:name=".BoardActivity" />
-        <activity android:name=".EmailLoginActivity" />
-        <activity android:name=".KakaoLoginActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

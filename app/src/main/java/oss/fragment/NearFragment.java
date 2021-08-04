@@ -28,7 +28,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.pedro.library.AutoPermissionsListener;
 
 import oss.main.R;
 
@@ -37,13 +36,16 @@ import oss.main.R;
  * Use the {@link NearFagment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NearFagment extends Fragment {
+public class NearFragment extends Fragment {
     private MapView mMapView;
     private GoogleMap googleMap;
 
     LocationManager manager;
     Double latitude = 0.0;
     Double longitude = 0.0;
+
+    @Override
+    public View onCreate()
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
