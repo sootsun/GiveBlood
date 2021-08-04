@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="oss.main">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -16,10 +18,8 @@
         <meta-data
             android:name = "com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}"/>
-        <activity android:name=".WritingActivity"></activity>
+        <activity android:name=".WriteActivity"></activity>
         <activity android:name=".BoardActivity" />
-        <activity android:name=".EmailLoginActivity" />
-        <activity android:name=".KakaoLoginActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

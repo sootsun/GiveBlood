@@ -66,7 +66,7 @@ public class BoardActivity extends AppCompatActivity {
 
         /*프래그먼트*/
         homeFragment = new HomeFragment();
-        //nearFragment = new NearFragment();
+        nearFragment = new NearFragment();
         chatFragment = new ChatFragment();
 
         addButton = findViewById(R.id.home_add_button);
@@ -85,11 +85,13 @@ public class BoardActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.home:
                     addButton.setVisibility(View.VISIBLE);
+                    getSupportActionBar().setTitle(R.string.board);
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                     return true;
                 case R.id.nearMap:
-                    Toast.makeText(getApplicationContext(), "Near", Toast.LENGTH_LONG).show();
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.container, nearFragment).commit();
+                    addButton.setVisibility(View.INVISIBLE);
+                    getSupportActionBar().setTitle(R.string.map);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, nearFragment).commit();
                     return true;
                 case R.id.chatting:
                     addButton.setVisibility(View.INVISIBLE);
