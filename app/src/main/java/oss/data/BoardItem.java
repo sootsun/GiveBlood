@@ -5,10 +5,10 @@ import android.os.Parcelable;
 
 /**게시판 내용
  *
- * @see Parcelable
+ * @see Parcelable <br>
  * [Parcelable] Intent로 보내기 위한 인터페이스
  *
- * @ TODO: 2021-07-29  글쓴이, 의료기관명, 병실, 환자명, 혈액형, 필요한 혈액 종류, 환자번호 ...
+ * @ TODO: 2021-07-29  의료기관명, 병실, 환자명, 혈액형, 필요한 혈액 종류, 환자번호 ...
  *
  * */
 public class BoardItem implements Parcelable {
@@ -16,7 +16,7 @@ public class BoardItem implements Parcelable {
     public String boardName;
     public String boardInfo;
     public String userName;
-
+    public int pos;
 
     public BoardItem(){}
 
@@ -30,6 +30,7 @@ public class BoardItem implements Parcelable {
         boardName = in.readString();
         boardInfo = in.readString();
         userName = in.readString();
+        pos = in.readInt();
     }
 
     public static final Creator<BoardItem> CREATOR = new Creator<BoardItem>() {
@@ -54,5 +55,6 @@ public class BoardItem implements Parcelable {
         dest.writeString(boardName);
         dest.writeString(boardInfo);
         dest.writeString(userName);
+        dest.writeInt(pos);
     }
 }

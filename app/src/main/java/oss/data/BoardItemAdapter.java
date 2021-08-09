@@ -1,5 +1,7 @@
 package oss.data;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import oss.fragment.HomeFragment;
+import oss.main.BoardActivity;
+import oss.main.ElementActivity;
 import oss.main.R;
 
 /**
@@ -24,6 +29,12 @@ import oss.main.R;
 public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.ViewHolder> {
 
     private ArrayList<BoardItem> itemList = new ArrayList<>();
+    private Context context;
+
+    public BoardItemAdapter(Context context) {
+        this.context = context;
+    }
+
 
     @NonNull
     @NotNull
@@ -65,7 +76,10 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
                 int pos = getAdapterPosition();
                 if(pos != RecyclerView.NO_POSITION) {
                     BoardItem item = itemList.get(pos);
-                    Toast.makeText(v.getContext(), item.boardName + " 글 클릭됨", Toast.LENGTH_SHORT).show();
+                    item.pos = pos;
+                    Intent intent = new Intent(v.getContext(), ElementActivity.class);
+                    intent.putExtra(REF.LIST.name(), item);
+                    context.startActivity(intent);
                 }
             });
         }

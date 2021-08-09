@@ -17,7 +17,7 @@ import oss.data.UserData
 import oss.util.SignInIntentContract
 
 class LoginActivity : AppCompatActivity() {
-    val PASSED = "익명"
+    private val PASSED = "익명"
 
     private var launcher: ActivityResultLauncher<String>? = null
     private var auth: FirebaseAuth = Firebase.auth

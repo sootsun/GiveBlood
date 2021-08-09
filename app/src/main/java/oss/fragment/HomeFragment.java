@@ -37,8 +37,8 @@ import oss.data.UserData;
 import oss.main.R;
 import oss.main.WriteActivity;
 
-/**
- * @// TODO: 2021-07-27 글쓰기 버튼 구현
+/** 게시판
+ *
  */
 @IgnoreExtraProperties
 public class HomeFragment extends Fragment {
@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         myRef = FirebaseDatabase.getInstance().getReference(REF.LIST.name());
-        boardItemAdapter = new BoardItemAdapter();
+        boardItemAdapter = new BoardItemAdapter(getContext());
 
         myRef.addValueEventListener(new ValueEventListener() {
             //변경 되었을 시 할 행동

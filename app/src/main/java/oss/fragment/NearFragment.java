@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,6 @@ public class NearFragment extends Fragment {
     LocationManager manager;
     Double latitude = 0.0;
     Double longitude = 0.0;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
