@@ -43,8 +43,6 @@ public class NearFragment extends Fragment {
     Double latitude = 0.0;
     Double longitude = 0.0;
 
-    @Override
-    public View onCreate()
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

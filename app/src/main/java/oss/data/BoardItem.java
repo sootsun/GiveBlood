@@ -16,7 +16,7 @@ public class BoardItem implements Parcelable {
     public String boardName;
     public String boardInfo;
     public String userName;
-    public int pos;
+    public String pos;
 
     public BoardItem(){}
 
@@ -24,13 +24,14 @@ public class BoardItem implements Parcelable {
         this.boardInfo = info;
         this.boardName = name;
         this.userName = userData.userName;
+        this.pos = "not yet";
     }
 
     protected BoardItem(Parcel in) {
         boardName = in.readString();
         boardInfo = in.readString();
         userName = in.readString();
-        pos = in.readInt();
+        pos = in.readString();
     }
 
     public static final Creator<BoardItem> CREATOR = new Creator<BoardItem>() {
@@ -55,6 +56,6 @@ public class BoardItem implements Parcelable {
         dest.writeString(boardName);
         dest.writeString(boardInfo);
         dest.writeString(userName);
-        dest.writeInt(pos);
+        dest.writeString(pos);
     }
 }

@@ -55,7 +55,8 @@ public class BoardActivity extends AppCompatActivity {
                     if(result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         BoardItem boardItem = data.getParcelableExtra(REF.LIST.toString());
-                        myRef.push().setValue(boardItem);
+                        boardItem.pos = myRef.push().getKey();
+                        myRef.child(boardItem.pos).setValue(boardItem);
                     }
                 });
 
@@ -73,10 +74,10 @@ public class BoardActivity extends AppCompatActivity {
 
         /*게시판 글쓰기 버튼*/
         addButton.setOnClickListener(v -> {
-            if(user.userName.equals("익명")) {
+            /*if(user.userName.equals("익명")) {
                 Toast.makeText(getApplicationContext(), "로그인 하세욤", Toast.LENGTH_SHORT).show();
                 return;
-            }
+            }*/
             Intent intent = new Intent(this, WriteActivity.class);
             intent.putExtra(REF.USER.name(), user);
             launcher.launch(intent);

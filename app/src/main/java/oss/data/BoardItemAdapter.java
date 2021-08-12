@@ -76,7 +76,6 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
                 int pos = getAdapterPosition();
                 if(pos != RecyclerView.NO_POSITION) {
                     BoardItem item = itemList.get(pos);
-                    item.pos = pos;
                     Intent intent = new Intent(v.getContext(), ElementActivity.class);
                     intent.putExtra(REF.LIST.name(), item);
                     context.startActivity(intent);
