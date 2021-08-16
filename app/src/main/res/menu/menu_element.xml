@@ -4,6 +4,5 @@
 
     <item android:id="@+id/element_del"
         android:title="삭제"
-        android:icon="@android:drawable/btn_minus"
-        app:showAsAction="always"/>
+        app:showAsAction="never"/>
 </menu>

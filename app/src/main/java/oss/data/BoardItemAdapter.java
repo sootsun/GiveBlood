@@ -1,12 +1,12 @@
 package oss.data;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,8 +15,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-import oss.fragment.HomeFragment;
-import oss.main.BoardActivity;
 import oss.main.ElementActivity;
 import oss.main.R;
 
@@ -29,7 +27,7 @@ import oss.main.R;
 public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.ViewHolder> {
 
     private ArrayList<BoardItem> itemList = new ArrayList<>();
-    private Context context;
+    private final Context context;
 
     public BoardItemAdapter(Context context) {
         this.context = context;
@@ -49,6 +47,7 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
         holder.onBind(itemList.get(position));
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setItemList(ArrayList<BoardItem> list){
         this.itemList = list;
         notifyDataSetChanged();
@@ -67,9 +66,9 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            profile = (TextView) itemView.findViewById(R.id.item_profile);
-            info = (TextView) itemView.findViewById(R.id.item_info);
-            writer = (TextView) itemView.findViewById(R.id.item_writer);
+            profile = itemView.findViewById(R.id.item_profile);
+            info = itemView.findViewById(R.id.item_info);
+            writer = itemView.findViewById(R.id.item_writer);
 
             //항목 클릭 이벤트
             itemView.setOnClickListener(v -> {

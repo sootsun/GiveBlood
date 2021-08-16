@@ -29,7 +29,7 @@ import oss.fragment.NearFragment;
  * @ TODO: 2021-07-26 설정 화면 구현
  * */
 public class BoardActivity extends AppCompatActivity {
-    private HomeFragment homeFragment;
+    public HomeFragment homeFragment;
     private NearFragment nearFragment;
     private ChatFragment chatFragment;
     private FloatingActionButton addButton;
@@ -57,6 +57,7 @@ public class BoardActivity extends AppCompatActivity {
                         BoardItem boardItem = data.getParcelableExtra(REF.LIST.toString());
                         boardItem.pos = myRef.push().getKey();
                         myRef.child(boardItem.pos).setValue(boardItem);
+                        HomeFragment.getData();
                     }
                 });
 
@@ -74,10 +75,10 @@ public class BoardActivity extends AppCompatActivity {
 
         /*게시판 글쓰기 버튼*/
         addButton.setOnClickListener(v -> {
-            /*if(user.userName.equals("익명")) {
+            if(user.userName.equals("익명")) {
                 Toast.makeText(getApplicationContext(), "로그인 하세욤", Toast.LENGTH_SHORT).show();
                 return;
-            }*/
+            }
             Intent intent = new Intent(this, WriteActivity.class);
             intent.putExtra(REF.USER.name(), user);
             launcher.launch(intent);

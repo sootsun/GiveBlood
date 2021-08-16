@@ -16,6 +16,7 @@ public class BoardItem implements Parcelable {
     public String boardName;
     public String boardInfo;
     public String userName;
+    public String userMail;
     public String pos;
 
     public BoardItem(){}
@@ -24,6 +25,7 @@ public class BoardItem implements Parcelable {
         this.boardInfo = info;
         this.boardName = name;
         this.userName = userData.userName;
+        this.userMail = userData.userMail;
         this.pos = "not yet";
     }
 
@@ -31,6 +33,7 @@ public class BoardItem implements Parcelable {
         boardName = in.readString();
         boardInfo = in.readString();
         userName = in.readString();
+        userMail = in.readString();
         pos = in.readString();
     }
 
@@ -56,6 +59,7 @@ public class BoardItem implements Parcelable {
         dest.writeString(boardName);
         dest.writeString(boardInfo);
         dest.writeString(userName);
+        dest.writeString(userMail);
         dest.writeString(pos);
     }
 }

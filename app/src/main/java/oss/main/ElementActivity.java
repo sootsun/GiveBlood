@@ -9,10 +9,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import oss.data.BoardItem;
 import oss.data.REF;
+import oss.fragment.HomeFragment;
 
 /**
  * @todo 게시판 삭제
@@ -20,6 +23,7 @@ import oss.data.REF;
 public class ElementActivity extends AppCompatActivity {
 
     BoardItem boardItem;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class ElementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_element);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
         boardItem = getIntent().getParcelableExtra(REF.LIST.name());
 
         TextView name = findViewById(R.id.element_name);
@@ -40,15 +45,16 @@ public class ElementActivity extends AppCompatActivity {
         writer.setText(boardItem.userName);
         detail.setText(boardItem.boardInfo);
 
-        findViewById(R.id.button).setOnClickListener(v -> {
-            finish();
-        });
-
+        findViewById(R.id.button).setOnClickListener(v -> finish());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_element, menu);
+        MenuItem del = menu.findItem(R.id.element_del);
+        if(boardItem.userMail.equals("익명") ||
+                !boardItem.userMail.equals(user.getEmail()))
+            del.setVisible(false);
         return true;
     }
 
@@ -58,12 +64,13 @@ public class ElementActivity extends AppCompatActivity {
         switch (id) {
             case R.id.element_del:
                 FirebaseDatabase.getInstance().getReference()
-                        .child(REF.LIST.name())
-                        .child(boardItem.pos).removeValue();
-                Toast.makeText(this, "삭제됨", Toast.LENGTH_SHORT).show();
-                finish();
-        }
+                            .child(REF.LIST.name())
+                            .child(boardItem.pos).removeValue();
+                    Toast.makeText(this, "삭제됨", Toast.LENGTH_SHORT).show();
+                HomeFragment.getData();
+                    finish();
+                    break;
+                }
         return super.onOptionsItemSelected(item);
-    }
-
+        }
 }

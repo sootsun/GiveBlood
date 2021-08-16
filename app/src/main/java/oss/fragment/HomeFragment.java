@@ -1,11 +1,8 @@
 package oss.fragment;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,9 +29,7 @@ import java.util.ArrayList;
 import oss.data.BoardItem;
 import oss.data.BoardItemAdapter;
 import oss.data.REF;
-import oss.data.UserData;
 import oss.main.R;
-import oss.main.WriteActivity;
 
 /** 게시판
  *
@@ -44,20 +38,41 @@ import oss.main.WriteActivity;
 public class HomeFragment extends Fragment {
 
     private SwipeRefreshLayout refreshLayout;
-    private RecyclerView recyclerView;
-
-    private DatabaseReference myRef;
-    private BoardItemAdapter boardItemAdapter;
+    @SuppressLint("StaticFieldLeak")
+    private static BoardItemAdapter boardItemAdapter;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        myRef = FirebaseDatabase.getInstance().getReference(REF.LIST.name());
         boardItemAdapter = new BoardItemAdapter(getContext());
+        getData();
+    }
 
-        myRef.addValueEventListener(new ValueEventListener() {
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_home, container, false);
+
+        refreshLayout = rootView.findViewById(R.id.home_refresh);
+        RecyclerView recyclerView = rootView.findViewById(R.id.home_recycler);
+
+        refreshLayout.setOnRefreshListener(() -> {
+            getData();
+            refreshLayout.setRefreshing(false);
+        });
+
+        recyclerView.setAdapter(boardItemAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        return rootView;
+    }
+
+    public static void getData() {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(REF.LIST.name());
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             //변경 되었을 시 할 행동
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 ArrayList<BoardItem> itemArrayList = new ArrayList<>();
@@ -68,6 +83,7 @@ public class HomeFragment extends Fragment {
                     itemArrayList.add(item);
                 }
                 boardItemAdapter.setItemList(itemArrayList);
+                boardItemAdapter.notifyDataSetChanged();
             }
             //실패
             @Override
@@ -75,24 +91,5 @@ public class HomeFragment extends Fragment {
                 Log.w("FireBase", "Failed to read value.", error.toException());
             }
         });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_home, container, false);
-
-        refreshLayout = rootView.findViewById(R.id.home_refresh);
-        recyclerView = rootView.findViewById(R.id.home_recycler);
-
-        refreshLayout.setOnRefreshListener(() -> {
-            boardItemAdapter.notifyDataSetChanged();
-            refreshLayout.setRefreshing(false);
-        });
-
-        recyclerView.setAdapter(boardItemAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        return rootView;
     }
 }

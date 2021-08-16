@@ -51,8 +51,7 @@ class LoginActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInAnonymously:success")
-                            val user = auth.currentUser
-                            var intent = Intent(this, BoardActivity::class.java)
+                            val intent = Intent(this, BoardActivity::class.java)
                             intent.putExtra(REF.USER.name, UserData(PASSED, PASSED))
                             startActivity(intent)
                         } else {
@@ -69,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth!!.signInWithCredential(credential)
+        auth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
@@ -77,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
                         val name = user?.displayName
                         val mail = user?.email
 
-                        var intent = Intent(this, BoardActivity::class.java)
+                        val intent = Intent(this, BoardActivity::class.java)
                         intent.putExtra(REF.USER.name, UserData(name, mail))
                         startActivity(intent)
                     } else {
