@@ -8,7 +8,8 @@ public class UserData implements Parcelable {
     public String userName;
     public String userMail;
 
-    public UserData(){}
+    public UserData() {
+    }
 
     protected UserData(Parcel in) {
         userName = in.readString();

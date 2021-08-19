@@ -3,40 +3,40 @@ package oss.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**게시판 내용
- *
- * @see Parcelable <br>
- * [Parcelable] Intent로 보내기 위한 인터페이스
+/**
+ * 게시판 내용
  *
  * @ TODO: 2021-07-29  의료기관명, 병실, 환자명, 혈액형, 필요한 혈액 종류, 환자번호 ...
- *
- * */
+ * @see Parcelable <br>
+ * [Parcelable] Intent로 보내기 위한 인터페이스
+ */
 public class BoardItem implements Parcelable {
     //public int id;
-    public String boardName;
-    public String boardInfo;
+    public String title;
+    public String content;
 
-    public String userName;
-    public String userMail;
+    public String writer;
+    public String email;
 
-    public String pos;
+    public String key;
 
-    public BoardItem(){}
+    public BoardItem() {
+    }
 
     public BoardItem(String name, String info, UserData userData) {
-        this.boardInfo = info;
-        this.boardName = name;
-        this.userName = userData.userName;
-        this.userMail = userData.userMail;
-        this.pos = "not yet";
+        this.content = info;
+        this.title = name;
+        this.writer = userData.userName;
+        this.email = userData.userMail;
+        this.key = "not yet";
     }
 
     protected BoardItem(Parcel in) {
-        boardName = in.readString();
-        boardInfo = in.readString();
-        userName = in.readString();
-        userMail = in.readString();
-        pos = in.readString();
+        title = in.readString();
+        content = in.readString();
+        writer = in.readString();
+        email = in.readString();
+        key = in.readString();
     }
 
     public static final Creator<BoardItem> CREATOR = new Creator<BoardItem>() {
@@ -58,10 +58,10 @@ public class BoardItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(boardName);
-        dest.writeString(boardInfo);
-        dest.writeString(userName);
-        dest.writeString(userMail);
-        dest.writeString(pos);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeString(writer);
+        dest.writeString(email);
+        dest.writeString(key);
     }
 }

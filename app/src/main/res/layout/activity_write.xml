@@ -7,7 +7,7 @@
     tools:context=".WriteActivity">
 
     <EditText
-        android:id="@+id/write_name_text"
+        android:id="@+id/write_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/write_detail_text"
+        android:id="@+id/write_content_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/write_name_text" />
+        app:layout_constraintTop_toBottomOf="@+id/write_title_text" />
 
     <Button
         android:id="@+id/write_confirm_button"
@@ -43,6 +43,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/write_detail_text"
+        app:layout_constraintTop_toBottomOf="@+id/write_content_text"
         app:layout_constraintVertical_bias="0.381" />
 </androidx.constraintlayout.widget.ConstraintLayout>

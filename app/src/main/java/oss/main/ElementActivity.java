@@ -22,8 +22,8 @@ import oss.data.BoardItem;
 import oss.data.REF;
 import oss.fragment.HomeFragment;
 
-/**
- * @todo 게시판 삭제
+/**글 내용 화면
+ *
  */
 public class ElementActivity extends AppCompatActivity {
 
@@ -50,9 +50,9 @@ public class ElementActivity extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         BoardItem boardItem = data.getParcelableExtra(REF.LIST.toString());
-                        removeData(boardItem.pos);
-                        boardItem.pos = myRef.push().getKey();
-                        myRef.child(boardItem.pos).setValue(boardItem);
+                        removeData(boardItem.key);
+                        boardItem.key = myRef.push().getKey();
+                        myRef.child(boardItem.key).setValue(boardItem);
                         HomeFragment.getData();
                     }
                     Toast.makeText(this, "수정됨", Toast.LENGTH_SHORT).show();
@@ -63,9 +63,9 @@ public class ElementActivity extends AppCompatActivity {
         TextView writer = findViewById(R.id.element_writer);
         TextView detail = findViewById(R.id.element_detail);
 
-        name.setText(boardItem.boardName);
-        writer.setText(boardItem.userName);
-        detail.setText(boardItem.boardInfo);
+        name.setText(boardItem.title);
+        writer.setText(boardItem.writer);
+        detail.setText(boardItem.content);
 
         findViewById(R.id.button).setOnClickListener(v -> finish());
     }
@@ -75,8 +75,8 @@ public class ElementActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_element, menu);
         MenuItem del = menu.findItem(R.id.element_del);
         MenuItem rew = menu.findItem(R.id.element_rewrite);
-        if (boardItem.userMail.equals("익명") ||
-                !boardItem.userMail.equals(user.getEmail())) {
+        if (boardItem.email.equals("익명") ||
+                !boardItem.email.equals(user.getEmail())) {
             del.setVisible(false);
             rew.setVisible(false);
         }
@@ -88,7 +88,7 @@ public class ElementActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.element_del:
-                removeData(boardItem.pos);
+                removeData(boardItem.key);
                 Toast.makeText(this, "삭제됨", Toast.LENGTH_SHORT).show();
                 HomeFragment.getData();
                 finish();

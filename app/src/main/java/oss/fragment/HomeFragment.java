@@ -31,8 +31,8 @@ import oss.data.BoardItemAdapter;
 import oss.data.REF;
 import oss.main.R;
 
-/** 게시판
- *
+/**
+ * 게시판
  */
 @IgnoreExtraProperties
 public class HomeFragment extends Fragment {
@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_home, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
 
         refreshLayout = rootView.findViewById(R.id.home_refresh);
         RecyclerView recyclerView = rootView.findViewById(R.id.home_recycler);
@@ -71,20 +71,20 @@ public class HomeFragment extends Fragment {
     public static void getData() {
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(REF.LIST.name());
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            //변경 되었을 시 할 행동
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 ArrayList<BoardItem> itemArrayList = new ArrayList<>();
 
                 //리스트 새로 업데이트
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     BoardItem item = dataSnapshot.getValue(BoardItem.class);
                     itemArrayList.add(item);
                 }
                 boardItemAdapter.setItemList(itemArrayList);
                 boardItemAdapter.notifyDataSetChanged();
             }
+
             //실패
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {

@@ -15,6 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 import oss.data.BoardItem;
 import oss.data.REF;
 import oss.data.UserData;
@@ -25,14 +27,14 @@ import oss.fragment.NearFragment;
 /**
  * 게시판 액티비티
  *
- * @see HomeFragment ,NearFagment,ChatFragment
  * @ TODO: 2021-07-26 설정 화면 구현
- * */
+ * @see HomeFragment ,NearFagment,ChatFragment
+ */
 public class BoardActivity extends AppCompatActivity {
     public HomeFragment homeFragment;
     private NearFragment nearFragment;
     private ChatFragment chatFragment;
-    private FloatingActionButton addButton;
+    private FloatingActionButton writeButton;
 
     private DatabaseReference myRef;
     private ActivityResultLauncher<Intent> launcher;
@@ -43,7 +45,7 @@ public class BoardActivity extends AppCompatActivity {
 
         //액션바 보이기
         setTheme(R.style.Theme_NeedBlood);
-        getSupportActionBar().setTitle(R.string.board);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.board);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
@@ -52,11 +54,11 @@ public class BoardActivity extends AppCompatActivity {
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if(result.getResultCode() == Activity.RESULT_OK) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         BoardItem boardItem = data.getParcelableExtra(REF.LIST.toString());
-                        boardItem.pos = myRef.push().getKey();
-                        myRef.child(boardItem.pos).setValue(boardItem);
+                        boardItem.key = myRef.push().getKey();
+                        myRef.child(boardItem.key).setValue(boardItem);
                         HomeFragment.getData();
                     }
                 });
@@ -64,23 +66,22 @@ public class BoardActivity extends AppCompatActivity {
         //계정정보
         Intent userIntent = getIntent();
         user = userIntent.getParcelableExtra(REF.USER.name());
-        Toast.makeText(this, user.userName+getString(R.string.signin_complete), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, user.userName + getString(R.string.signin_complete), Toast.LENGTH_SHORT).show();
 
         /*프래그먼트*/
         homeFragment = new HomeFragment();
         nearFragment = new NearFragment();
         chatFragment = new ChatFragment();
 
-        addButton = findViewById(R.id.home_add_button);
+        writeButton = findViewById(R.id.home_add_button);
 
         /*게시판 글쓰기 버튼*/
-        addButton.setOnClickListener(v -> {
-            if(user.userName.equals("익명")) {
+        writeButton.setOnClickListener(v -> {
+            if (user.userName.equals(getString(R.string.anonymous))) {
                 Toast.makeText(getApplicationContext(), "로그인 하세욤", Toast.LENGTH_SHORT).show();
                 return;
             }
             Intent intent = new Intent(this, WriteActivity.class);
-            //intent.putExtra(REF.USER.name(), user);
             intent.putExtra(REF.LIST.name(), new BoardItem("title", "info", user));
             launcher.launch(intent);
         });
@@ -91,17 +92,18 @@ public class BoardActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
-                    addButton.setVisibility(View.VISIBLE);
+                    writeButton.setVisibility(View.VISIBLE);
                     getSupportActionBar().setTitle(R.string.board);
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                     return true;
                 case R.id.nearMap:
-                    addButton.setVisibility(View.INVISIBLE);
+                    writeButton.setVisibility(View.INVISIBLE);
                     getSupportActionBar().setTitle(R.string.map);
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, nearFragment).commit();
                     return true;
                 case R.id.chatting:
-                    addButton.setVisibility(View.INVISIBLE);
+                    writeButton.setVisibility(View.INVISIBLE);
+                    getSupportActionBar().setTitle(R.string.chat);
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, chatFragment).commit();
                     return true;
                 case R.id.setting:

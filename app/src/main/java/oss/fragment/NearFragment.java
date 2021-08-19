@@ -50,12 +50,12 @@ public class NearFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_near, null, false);
         int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
         int permissionCheck2 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        if(permissionCheck == PackageManager.PERMISSION_DENIED){ //위치 권한 확인
+        if (permissionCheck == PackageManager.PERMISSION_DENIED) { //위치 권한 확인
 
             //위치 권한 요청
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
         }
-        if(permissionCheck2 == PackageManager.PERMISSION_DENIED){ //위치 권한 확인
+        if (permissionCheck2 == PackageManager.PERMISSION_DENIED) { //위치 권한 확인
 
             //위치 권한 요청
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
@@ -88,43 +88,46 @@ public class NearFragment extends Fragment {
         super.onResume();
         mMapView.onResume();
     }
+
     @Override
     public void onPause() {
         super.onPause();
         mMapView.onPause();
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
     }
+
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
 
-    private void startLocation(){
+    private void startLocation() {
         manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         long minTime = 1000;
         float minDistance = 1;
 
-        if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        ){
-            Toast.makeText(getActivity(),"DONT HAVE PERMISSIONS",Toast.LENGTH_LONG).show();
+        ) {
+            Toast.makeText(getActivity(), "DONT HAVE PERMISSIONS", Toast.LENGTH_LONG).show();
             return;
         }
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, mLocationListener);
-        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,minTime, minDistance, mLocationListener);
+        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, mLocationListener);
     }
 
-    private void stopLocationService(){
-        if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
+    private void stopLocationService() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        ){
-            Toast.makeText(getActivity(),"DONT HAVE PERMISSIONS", Toast.LENGTH_LONG).show();
+        ) {
+            Toast.makeText(getActivity(), "DONT HAVE PERMISSIONS", Toast.LENGTH_LONG).show();
             return;
         }
         manager.removeUpdates(mLocationListener);
@@ -139,11 +142,14 @@ public class NearFragment extends Fragment {
             stopLocationService();
         }
 
-        public void onProviderDisabled(String provider){}
+        public void onProviderDisabled(String provider) {
+        }
 
-        public void onProviderEnabled(String provider){}
+        public void onProviderEnabled(String provider) {
+        }
 
-        public void onStatusChanged(String provider, int status, Bundle extras){}
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
     };
 
 

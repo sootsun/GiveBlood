@@ -22,17 +22,15 @@ import oss.main.R;
  * 게시판 항목 뷰 어댑터
  *
  * @see BoardItem
- *
- * */
+ */
 public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.ViewHolder> {
 
-    private ArrayList<BoardItem> itemList = new ArrayList<>();
+    private static ArrayList<BoardItem> itemList = new ArrayList<>();
     private final Context context;
 
     public BoardItemAdapter(Context context) {
         this.context = context;
     }
-
 
     @NonNull
     @NotNull
@@ -48,7 +46,7 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setItemList(ArrayList<BoardItem> list){
+    public void setItemList(ArrayList<BoardItem> list) {
         this.itemList = list;
         notifyDataSetChanged();
     }
@@ -73,7 +71,7 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
             //항목 클릭 이벤트
             itemView.setOnClickListener(v -> {
                 int pos = getAdapterPosition();
-                if(pos != RecyclerView.NO_POSITION) {
+                if (pos != RecyclerView.NO_POSITION) {
                     BoardItem item = itemList.get(pos);
                     Intent intent = new Intent(v.getContext(), ElementActivity.class);
                     intent.putExtra(REF.LIST.name(), item);
@@ -82,10 +80,10 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
             });
         }
 
-        void onBind(BoardItem item){
-            profile.setText(item.boardName);
-            info.setText(item.boardInfo);
-            writer.setText(item.userName);
+        void onBind(BoardItem item) {
+            profile.setText(item.title);
+            info.setText(item.content);
+            writer.setText(item.writer);
         }
     }
 }
