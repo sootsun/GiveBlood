@@ -15,8 +15,10 @@ public class BoardItem implements Parcelable {
     //public int id;
     public String boardName;
     public String boardInfo;
+
     public String userName;
     public String userMail;
+
     public String pos;
 
     public BoardItem(){}

@@ -24,11 +24,11 @@ import oss.fragment.HomeFragment;
 
 /**
  * @todo 게시판 삭제
- * */
+ */
 public class ElementActivity extends AppCompatActivity {
 
-    BoardItem boardItem;
-    FirebaseUser user;
+    private BoardItem boardItem;
+    private FirebaseUser user;
     private ActivityResultLauncher<Intent> launcher;
     private DatabaseReference myRef;
 
@@ -47,7 +47,7 @@ public class ElementActivity extends AppCompatActivity {
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if(result.getResultCode() == Activity.RESULT_OK) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         BoardItem boardItem = data.getParcelableExtra(REF.LIST.toString());
                         removeData(boardItem.pos);
@@ -75,7 +75,7 @@ public class ElementActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_element, menu);
         MenuItem del = menu.findItem(R.id.element_del);
         MenuItem rew = menu.findItem(R.id.element_rewrite);
-        if(boardItem.userMail.equals("익명") ||
+        if (boardItem.userMail.equals("익명") ||
                 !boardItem.userMail.equals(user.getEmail())) {
             del.setVisible(false);
             rew.setVisible(false);
@@ -91,19 +91,20 @@ public class ElementActivity extends AppCompatActivity {
                 removeData(boardItem.pos);
                 Toast.makeText(this, "삭제됨", Toast.LENGTH_SHORT).show();
                 HomeFragment.getData();
-                    finish();
-                    break;
+                finish();
+                break;
             case R.id.element_rewrite:
-                Intent intent = new Intent(this,WriteActivity.class);
+                Intent intent = new Intent(this, WriteActivity.class);
                 intent.putExtra(REF.LIST.name(), boardItem);
                 launcher.launch(intent);
-                }
+        }
         return super.onOptionsItemSelected(item);
-        }
+    }
 
-        private void removeData(String pos) {
-            FirebaseDatabase.getInstance().getReference()
-                    .child(REF.LIST.name())
-                    .child(pos).removeValue();
-        }
+    private void removeData(String pos) {
+        FirebaseDatabase.getInstance()
+                .getReference()
+                .child(REF.LIST.name())
+                .child(pos).removeValue();
+    }
 }

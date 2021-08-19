@@ -16,7 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SplashTheme">
-        <activity android:name=".ElementActivity"/>
+        <activity
+            android:name=".SetActivity"
+            android:exported="true" />
+        <activity android:name=".ElementActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

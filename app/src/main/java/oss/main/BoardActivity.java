@@ -106,7 +106,7 @@ public class BoardActivity extends AppCompatActivity {
                     return true;
                 case R.id.setting:
                     //설정 화면 시작
-                    Toast.makeText(getApplicationContext(), "Set", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(this, SetActivity.class));
                     return true;
             }
             return false;
