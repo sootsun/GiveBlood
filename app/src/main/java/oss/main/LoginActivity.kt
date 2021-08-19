@@ -27,6 +27,14 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         auth = FirebaseAuth.getInstance()
+        val tmp = auth.currentUser
+
+        if( tmp != null ) {
+            val intent = Intent(this, BoardActivity::class.java)
+            intent.putExtra(REF.USER.name,UserData(tmp.displayName, tmp.email))
+            startActivity(intent)
+            finish()
+        }
 
         launcher = registerForActivityResult(SignInIntentContract()) { result: String? ->
             result?.let {

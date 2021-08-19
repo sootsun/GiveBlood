@@ -105,7 +105,6 @@ public class BoardActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, chatFragment).commit();
                     return true;
                 case R.id.setting:
-                    //설정 화면 시작
                     startActivity(new Intent(this, SetActivity.class));
                     return true;
             }
