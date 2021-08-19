@@ -80,7 +80,8 @@ public class BoardActivity extends AppCompatActivity {
                 return;
             }
             Intent intent = new Intent(this, WriteActivity.class);
-            intent.putExtra(REF.USER.name(), user);
+            //intent.putExtra(REF.USER.name(), user);
+            intent.putExtra(REF.LIST.name(), new BoardItem("title", "info", user));
             launcher.launch(intent);
         });
 

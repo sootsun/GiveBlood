@@ -20,12 +20,16 @@ public class WriteActivity extends AppCompatActivity {
         EditText id = findViewById(R.id.write_name_text);
         EditText info = findViewById(R.id.write_detail_text);
 
+        BoardItem item = getIntent().getParcelableExtra(REF.LIST.name());
+
+        id.setText(item.boardName);
+        info.setText(item.boardInfo);
 
         findViewById(R.id.write_confirm_button).setOnClickListener(v -> {
-            UserData user = getIntent().getParcelableExtra(REF.USER.name());
 
             Intent intent = new Intent();
-            BoardItem boardItem = new BoardItem(id.getText().toString(), info.getText().toString(), user);
+            BoardItem boardItem = new BoardItem(id.getText().toString(), info.getText().toString(), new UserData(item.userName, item.userMail));
+            boardItem.pos = item.pos;
 
             intent.putExtra(REF.LIST.name(), boardItem);
 
