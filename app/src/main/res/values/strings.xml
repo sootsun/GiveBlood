@@ -21,4 +21,11 @@
 
     <string name="anonymous">익명</string>
 
+    <string-array name="blood_type">
+        <item>O형</item>
+        <item>A형</item>
+        <item>B형</item>
+        <item>AB형</item>
+    </string-array>
+
 </resources>

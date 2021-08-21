@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boardItemAdapter = new BoardItemAdapter(getContext());
-        getData();
+        update();
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
         RecyclerView recyclerView = rootView.findViewById(R.id.home_recycler);
 
         refreshLayout.setOnRefreshListener(() -> {
-            getData();
+            update();
             refreshLayout.setRefreshing(false);
         });
 
@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
-    public static void getData() {
+    public static void update() {
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(REF.LIST.name());
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")

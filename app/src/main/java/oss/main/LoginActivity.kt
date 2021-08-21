@@ -13,7 +13,6 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import oss.data.REF
-import oss.data.UserData
 import oss.util.SignInIntentContract
 
 class LoginActivity : AppCompatActivity() {
@@ -26,11 +25,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         auth = FirebaseAuth.getInstance()
-        val alreadySign = auth.currentUser
+        val currentUser = auth.currentUser
 
-        if (alreadySign != null) {
+        /*todo 스플래시로 이동*/
+        //로그인 내역 확인
+        if (currentUser != null) {
             val intent = Intent(this, BoardActivity::class.java)
-            intent.putExtra(REF.USER.name, UserData(alreadySign.displayName, alreadySign.email))
+            intent.putExtra(REF.USER.name, auth.currentUser)
             startActivity(intent)
             finish()
         }
@@ -45,35 +46,21 @@ class LoginActivity : AppCompatActivity() {
             launcher!!.launch(getString(R.string.default_web_client_id))
         }
 
-        // 카카오 로그인 버튼
-        findViewById<Button>(R.id.main_kakao_button).setOnClickListener {
-            Toast.makeText(this, "카카오 로그인", Toast.LENGTH_LONG).show()
-        }
-
         // 익명 버튼
         findViewById<Button>(R.id.main_pass_button).setOnClickListener {
             auth.signInAnonymously()
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInAnonymously:success")
                         val intent = Intent(this, BoardActivity::class.java)
-                        intent.putExtra(
-                            REF.USER.name,
-                            UserData(
-                                resources.getString(R.string.anonymous),
-                                resources.getString(R.string.anonymous)
-                            )
-                        )
+                        intent.putExtra(REF.USER.name, auth.currentUser)
                         startActivity(intent)
                     } else {
-                        // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInAnonymously:failure", task.exception)
                         Toast.makeText(
                             baseContext, "Authentication failed.",
                             Toast.LENGTH_SHORT
                         ).show()
-                        //updateUI(null)
                     }
                 }
 
@@ -85,16 +72,11 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     val user = auth.currentUser
-                    val name = user?.displayName
-                    val mail = user?.email
-
                     val intent = Intent(this, BoardActivity::class.java)
-                    intent.putExtra(REF.USER.name, UserData(name, mail))
+                    intent.putExtra(REF.USER.name, user)
                     startActivity(intent)
                 } else {
-                    // If sign in fails, display a message to the user.
                     Toast.makeText(this@LoginActivity, R.string.signin_fail, Toast.LENGTH_LONG)
                         .show()
                 }
