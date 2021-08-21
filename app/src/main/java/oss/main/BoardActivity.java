@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -19,7 +20,6 @@ import java.util.Objects;
 
 import oss.data.BoardItem;
 import oss.data.REF;
-import oss.data.UserData;
 import oss.fragment.ChatFragment;
 import oss.fragment.HomeFragment;
 import oss.fragment.NearFragment;
@@ -38,11 +38,10 @@ public class BoardActivity extends AppCompatActivity {
 
     private DatabaseReference myRef;
     private ActivityResultLauncher<Intent> launcher;
-    private UserData user;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         //액션바 보이기
         setTheme(R.style.Theme_NeedBlood);
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.board);
@@ -59,30 +58,30 @@ public class BoardActivity extends AppCompatActivity {
                         BoardItem boardItem = data.getParcelableExtra(REF.LIST.toString());
                         boardItem.key = myRef.push().getKey();
                         myRef.child(boardItem.key).setValue(boardItem);
-                        HomeFragment.getData();
+                        HomeFragment.update();
                     }
                 });
 
         //계정정보
         Intent userIntent = getIntent();
         user = userIntent.getParcelableExtra(REF.USER.name());
-        Toast.makeText(this, user.userName + getString(R.string.signin_complete), Toast.LENGTH_SHORT).show();
+        if(!user.isAnonymous())
+            Toast.makeText(this, user.getDisplayName() + getString(R.string.signin_complete), Toast.LENGTH_SHORT).show();
 
         /*프래그먼트*/
         homeFragment = new HomeFragment();
         nearFragment = new NearFragment();
         chatFragment = new ChatFragment();
 
-        writeButton = findViewById(R.id.home_add_button);
-
         /*게시판 글쓰기 버튼*/
+        writeButton = findViewById(R.id.home_add_button);
         writeButton.setOnClickListener(v -> {
-            if (user.userName.equals(getString(R.string.anonymous))) {
+            if (user.isAnonymous()) {
                 Toast.makeText(getApplicationContext(), "로그인 하세욤", Toast.LENGTH_SHORT).show();
                 return;
             }
             Intent intent = new Intent(this, WriteActivity.class);
-            intent.putExtra(REF.LIST.name(), new BoardItem("title", "info", user));
+            intent.putExtra(REF.LIST.name(), new BoardItem(user));
             launcher.launch(intent);
         });
 

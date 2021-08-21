@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,37 +49,35 @@ public class ElementActivity extends AppCompatActivity {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        BoardItem boardItem = data.getParcelableExtra(REF.LIST.toString());
+                        BoardItem boardItem = result.getData().getParcelableExtra(REF.LIST.name());
                         removeData(boardItem.key);
                         boardItem.key = myRef.push().getKey();
                         myRef.child(boardItem.key).setValue(boardItem);
-                        HomeFragment.getData();
+                        HomeFragment.update();
                     }
                     Toast.makeText(this, "수정됨", Toast.LENGTH_SHORT).show();
                     finish();
                 });
 
-        TextView name = findViewById(R.id.element_name);
-        TextView writer = findViewById(R.id.element_writer);
-        TextView detail = findViewById(R.id.element_detail);
+        TextView patientName = findViewById(R.id.elem_patient_name);
+        TextView patientNum =findViewById(R.id.elem_patient_num);
+        TextView hospital =findViewById(R.id.elem_hospital);
+        TextView room =findViewById(R.id.elem_room);
 
-        name.setText(boardItem.title);
-        writer.setText(boardItem.writer);
-        detail.setText(boardItem.content);
+        patientName.setText(boardItem.patient);
+        patientNum.setText(boardItem.patientNum);
+        hospital.setText(boardItem.hospital);
+        room.setText(boardItem.room);
 
-        findViewById(R.id.button).setOnClickListener(v -> finish());
+        findViewById(R.id.elem_confirm_button).setOnClickListener(v -> finish());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_element, menu);
-        MenuItem del = menu.findItem(R.id.element_del);
-        MenuItem rew = menu.findItem(R.id.element_rewrite);
-        if (boardItem.email.equals("익명") ||
-                !boardItem.email.equals(user.getEmail())) {
-            del.setVisible(false);
-            rew.setVisible(false);
+        if (boardItem.isWriter(user)) {
+            menu.findItem(R.id.element_del).setVisible(false);
+            menu.findItem(R.id.element_rewrite).setVisible(false);
         }
         return true;
     }
@@ -90,7 +89,7 @@ public class ElementActivity extends AppCompatActivity {
             case R.id.element_del:
                 removeData(boardItem.key);
                 Toast.makeText(this, "삭제됨", Toast.LENGTH_SHORT).show();
-                HomeFragment.getData();
+                HomeFragment.update();
                 finish();
                 break;
             case R.id.element_rewrite:

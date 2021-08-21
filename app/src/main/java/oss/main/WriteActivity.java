@@ -5,15 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import oss.data.BoardItem;
 import oss.data.REF;
-import oss.data.UserData;
 
 /**글쓰기 화면
- *
+ * @todo 스피너 구현
  * */
 public class WriteActivity extends AppCompatActivity {
+
+    EditText patientName;
+    EditText patientNum;
+    EditText hospital;
+    EditText room;
+    Spinner bloodType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,22 +27,37 @@ public class WriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_write);
 
         /*작성 항목*/
-        EditText title = findViewById(R.id.write_title_text);
-        EditText content = findViewById(R.id.write_content_text);
+        patientName = findViewById(R.id.elem_patient_name);
+        patientNum = findViewById(R.id.elem_patient_num);
+        hospital = findViewById(R.id.elem_hospital);
+        room = findViewById(R.id.elem_room);
+        bloodType = findViewById(R.id.spinner);
+
 
         /*수정 시 원래 값*/
         BoardItem item = getIntent().getParcelableExtra(REF.LIST.name());
-        title.setText(item.title);
-        content.setText(item.content);
+        getData(item);
 
         /*완료*/
-        findViewById(R.id.write_confirm_button).setOnClickListener(v -> {
+        findViewById(R.id.elem_confirm_button).setOnClickListener(v -> {
             Intent intent = new Intent();
-            BoardItem boardItem = new BoardItem(title.getText().toString(), content.getText().toString(), new UserData(item.writer, item.email));
-            boardItem.key = item.key;
-            intent.putExtra(REF.LIST.name(), boardItem);
+            setData(item);
+            intent.putExtra(REF.LIST.name(), item);
             setResult(RESULT_OK, intent);
             finish();
         });
+    }
+
+    private void getData(BoardItem item) {
+        patientName.setText(item.patient);
+        patientNum.setText(item.patientNum);
+        hospital.setText(item.hospital);
+        room.setText(item.room);
+    }
+    private void setData(BoardItem item) {
+        item.patient = patientName.getText().toString();
+        item.patientNum = patientNum.getText().toString();
+        item.hospital = hospital.getText().toString();
+        item.room = room.getText().toString();
     }
 }

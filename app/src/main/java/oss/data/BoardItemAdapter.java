@@ -81,8 +81,8 @@ public class BoardItemAdapter extends RecyclerView.Adapter<BoardItemAdapter.View
         }
 
         void onBind(BoardItem item) {
-            profile.setText(item.title);
-            info.setText(item.content);
+            profile.setText(item.patient);
+            info.setText(item.hospital);
             writer.setText(item.writer);
         }
     }

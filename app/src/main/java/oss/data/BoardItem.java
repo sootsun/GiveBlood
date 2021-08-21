@@ -3,6 +3,8 @@ package oss.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.auth.FirebaseUser;
+
 /**
  * 게시판 내용
  *
@@ -11,32 +13,50 @@ import android.os.Parcelable;
  * [Parcelable] Intent로 보내기 위한 인터페이스
  */
 public class BoardItem implements Parcelable {
-    //public int id;
-    public String title;
-    public String content;
+    //내용
+    public String patient;
+    public String patientNum;
+    public String bloodType;
+    public String hospital;
+    public String room;
 
+    //작성정보
     public String writer;
     public String email;
-
     public String key;
+
+    private static final String EMPTY = "";
 
     public BoardItem() {
     }
 
-    public BoardItem(String name, String info, UserData userData) {
-        this.content = info;
-        this.title = name;
-        this.writer = userData.userName;
-        this.email = userData.userMail;
-        this.key = "not yet";
+    public BoardItem(FirebaseUser user) {
+        this(EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,user);
+    }
+
+    public BoardItem(String patient, String patientNum, String blood_type, String hospital, String room, FirebaseUser user) {
+        this.patient = patient;
+        this.patientNum = patientNum;
+        this.bloodType = blood_type;
+        this.hospital = hospital;
+        this.room = room;
+        this.writer = user.getDisplayName();
+        this.email = user.getEmail();
     }
 
     protected BoardItem(Parcel in) {
-        title = in.readString();
-        content = in.readString();
+        patient = in.readString();
+        patientNum = in.readString();
+        bloodType = in.readString();
+        hospital = in.readString();
+        room = in.readString();
         writer = in.readString();
         email = in.readString();
         key = in.readString();
+    }
+
+    public boolean isWriter(FirebaseUser user) {
+        return !(user.isAnonymous() || !email.equals(user.getEmail()));
     }
 
     public static final Creator<BoardItem> CREATOR = new Creator<BoardItem>() {
@@ -58,8 +78,11 @@ public class BoardItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(content);
+        dest.writeString(patient);
+        dest.writeString(patientNum);
+        dest.writeString(hospital);
+        dest.writeString(bloodType);
+        dest.writeString(room);
         dest.writeString(writer);
         dest.writeString(email);
         dest.writeString(key);
