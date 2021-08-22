@@ -32,7 +32,7 @@ public class BoardItem implements Parcelable {
     }
 
     public BoardItem(FirebaseUser user) {
-        this(EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,user);
+        this(EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, user);
     }
 
     public BoardItem(String patient, String patientNum, String blood_type, String hospital, String room, FirebaseUser user) {
@@ -81,8 +81,8 @@ public class BoardItem implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(patient);
         dest.writeString(patientNum);
-        dest.writeString(hospital);
         dest.writeString(bloodType);
+        dest.writeString(hospital);
         dest.writeString(room);
         dest.writeString(writer);
         dest.writeString(email);
