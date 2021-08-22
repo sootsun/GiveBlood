@@ -63,11 +63,13 @@ public class ElementActivity extends AppCompatActivity {
         TextView patientNum =findViewById(R.id.elem_patient_num);
         TextView hospital =findViewById(R.id.elem_hospital);
         TextView room =findViewById(R.id.elem_room);
+        TextView bloodType = findViewById(R.id.elem_blood);
 
         patientName.setText(boardItem.patient);
         patientNum.setText(boardItem.patientNum);
         hospital.setText(boardItem.hospital);
         room.setText(boardItem.room);
+        bloodType.setText(boardItem.bloodType);
 
         findViewById(R.id.elem_confirm_button).setOnClickListener(v -> finish());
     }
@@ -75,7 +77,7 @@ public class ElementActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_element, menu);
-        if (boardItem.isWriter(user)) {
+        if (!boardItem.isWriter(user)) {
             menu.findItem(R.id.element_del).setVisible(false);
             menu.findItem(R.id.element_rewrite).setVisible(false);
         }

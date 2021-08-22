@@ -78,6 +78,7 @@
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/elem_blood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

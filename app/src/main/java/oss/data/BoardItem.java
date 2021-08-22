@@ -2,6 +2,7 @@ package oss.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -56,7 +57,7 @@ public class BoardItem implements Parcelable {
     }
 
     public boolean isWriter(FirebaseUser user) {
-        return !(user.isAnonymous() || !email.equals(user.getEmail()));
+        return (!user.isAnonymous() && email.equals(user.getEmail()));
     }
 
     public static final Creator<BoardItem> CREATOR = new Creator<BoardItem>() {
