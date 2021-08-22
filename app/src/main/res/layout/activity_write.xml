@@ -78,15 +78,16 @@
             android:id="@+id/write_bloodType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48sp" />
+            android:minHeight="48sp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <EditText
-            android:id="@+id/write_hospital"
+            android:id="@+id/write_hospital_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:minHeight="48dp"
+            android:minHeight="48sp"
             android:text="Name" />
 
         <EditText

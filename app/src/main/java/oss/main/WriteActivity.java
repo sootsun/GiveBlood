@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,11 +25,11 @@ public class WriteActivity extends AppCompatActivity {
 
     EditText patientName;
     EditText patientNum;
-    EditText hospital;
+    EditText hospitalName;
     EditText room;
     Spinner bloodType;
 
-    BoardItem boardItem;
+    BoardItem item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +41,13 @@ public class WriteActivity extends AppCompatActivity {
         /*작성 항목*/
         patientName = findViewById(R.id.write_patient_name);
         patientNum = findViewById(R.id.write_patient_num);
-        hospital = findViewById(R.id.write_hospital);
+        hospitalName = findViewById(R.id.write_hospital_name);
         room = findViewById(R.id.write_room);
 
 
         /*수정 시 원래 값*/
-        boardItem = getIntent().getParcelableExtra(REF.LIST.name());
-        getData(boardItem);
+        item = getIntent().getParcelableExtra(REF.LIST.name());
+        getData();
 
         /*혈액형*/
         bloodType = findViewById(R.id.write_bloodType);
@@ -55,39 +56,38 @@ public class WriteActivity extends AppCompatActivity {
         bloodType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                boardItem.bloodType = (String) parent.getItemAtPosition(position);
+                item.bloodType = (String) parent.getItemAtPosition(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                boardItem.bloodType = "NON";
             }
         });
 
-
         /*완료*/
         findViewById(R.id.elem_confirm_button).setOnClickListener(v -> {
-            confirm(boardItem);
+            confirm();
         });
     }
 
-    private void getData(BoardItem item) {
+    private void getData() {
         patientName.setText(item.patient);
         patientNum.setText(item.patientNum);
-        hospital.setText(item.hospital);
+        hospitalName.setText(item.hospital);
         room.setText(item.room);
     }
 
-    private void setData(BoardItem item) {
+    private void setData() {
         item.patient = patientName.getText().toString();
         item.patientNum = patientNum.getText().toString();
-        item.hospital = hospital.getText().toString();
+        item.hospital = hospitalName.getText().toString();
+        Log.d("confirm", "sethospital:"+item.hospital);
         item.room = room.getText().toString();
     }
 
-    private void confirm(BoardItem item) {
+    private void confirm() {
         Intent intent = new Intent();
-        setData(item);
+        setData();
         intent.putExtra(REF.LIST.name(), item);
         setResult(RESULT_OK, intent);
         finish();
@@ -101,7 +101,7 @@ public class WriteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        confirm(boardItem);
+        confirm();
         return super.onOptionsItemSelected(item);
     }
 }

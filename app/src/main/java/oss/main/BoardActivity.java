@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import oss.data.REF;
 import oss.fragment.ChatFragment;
 import oss.fragment.HomeFragment;
 import oss.fragment.NearFragment;
+import oss.fragment.SetFragment;
 
 /**
  * 게시판 액티비티
@@ -34,6 +36,7 @@ public class BoardActivity extends AppCompatActivity {
     public HomeFragment homeFragment;
     private NearFragment nearFragment;
     private ChatFragment chatFragment;
+    private SetFragment setFragment;
     private FloatingActionButton writeButton;
 
     private DatabaseReference myRef;
@@ -56,8 +59,10 @@ public class BoardActivity extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         BoardItem boardItem = data.getParcelableExtra(REF.LIST.toString());
+                        Log.d("launch", "sethospital:"+boardItem.hospital);
                         boardItem.key = myRef.push().getKey();
                         myRef.child(boardItem.key).setValue(boardItem);
+                        Log.d("launch", "sethospital:"+boardItem.hospital);
                         HomeFragment.update();
                     }
                 });
@@ -72,6 +77,7 @@ public class BoardActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         nearFragment = new NearFragment();
         chatFragment = new ChatFragment();
+        setFragment = new SetFragment();
 
         /*게시판 글쓰기 버튼*/
         writeButton = findViewById(R.id.home_add_button);
@@ -106,7 +112,9 @@ public class BoardActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, chatFragment).commit();
                     return true;
                 case R.id.setting:
-                    startActivity(new Intent(this, SetActivity.class));
+                    writeButton.setVisibility(View.INVISIBLE);
+                    getSupportActionBar().setTitle("설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, setFragment).commit();
                     return true;
             }
             return false;
