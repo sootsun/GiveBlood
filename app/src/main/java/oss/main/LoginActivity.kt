@@ -14,6 +14,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import oss.data.REF
 import oss.util.SignInIntentContract
+import android.content.SharedPreferences
+
+import android.app.Activity
+
+
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,6 +32,8 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
+
+
 
         /*todo 스플래시로 이동*/
         //로그인 내역 확인
@@ -82,4 +90,5 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
+
 }
